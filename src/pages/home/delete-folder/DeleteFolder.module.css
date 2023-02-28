@@ -1,0 +1,16 @@
+.deleteModal {
+  padding: 0px 20px;
+}
+.title {
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: end;
+}
+.actions button {
+  cursor: pointer;
+}

@@ -4,6 +4,7 @@ import Modal from "../../components/modal/Modal";
 import axiosInstance from "../../utils/axiosInstance";
 import AddFolder from "./add-folder/AddFolder";
 import DeleteFolder from "./delete-folder/DeleteFolder";
+import Folders from "./Folders";
 import classes from "./Home.module.css";
 
 const Home = () => {
@@ -13,9 +14,11 @@ const Home = () => {
   const [parentId, setParentId] = useState("");
 
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [folderId, setFolderId] = useState("");
+  const [folder, setFolder] = useState("");
 
   const [foldersByParent, setFoldersByParent] = useState<any>();
+
+  //Getting grouped folders using parentId
   useEffect(() => {
     axiosInstance.get("folders/parent").then((res) => {
       setFoldersByParent(res.data);
@@ -30,11 +33,15 @@ const Home = () => {
     setParentId(parentId);
   };
 
+  const handleDeleteFolder = (folder: string) => {
+    setDeleteModalVisible(true);
+    setFolder(folder);
+  };
+
+  //Getting Children Folders for a specific Parent folder Id
   const getChildren = (parentId: string) =>
     foldersByParent.find((item: any) => item._id === parentId);
   const root = getChildren("root");
-
-  console.log(foldersByParent, "foldersByParent");
 
   return (
     <section className={classes.fonderStructure}>
@@ -61,100 +68,12 @@ const Home = () => {
               </div>
             </div>
             <ul>
-              <li>
-                <div className={classes.flex}>
-                  <div className={classes.flex}>
-                    <span className="material-symbols-outlined">expand_more</span>
-                    <span className="material-symbols-outlined">
-                      folder_open
-                    </span>{" "}
-                    Folder 1
-                  </div>
-                  <div className={classes.actions}>
-                    <button className={classes.flex}>
-                      <span className="material-symbols-outlined">
-                        delete_forever
-                      </span>
-                    </button>
-                    <button className={classes.flex}>
-                      <span className="material-symbols-outlined">
-                        create_new_folder
-                      </span>{" "}
-                    </button>
-                  </div>
-                </div>
-                <ul>
-                  <li>
-                    <div className={classes.flex}>
-                      <div className={classes.flex}>
-                        <span className="material-symbols-outlined">
-                          keyboard_arrow_right
-                        </span>
-                        <span className="material-symbols-outlined">folder</span>{" "}
-                        Nested 1
-                      </div>
-                      <div className={classes.actions}>
-                        <button className={classes.flex}>
-                          <span className="material-symbols-outlined">
-                            delete_forever
-                          </span>
-                        </button>
-                        <button className={classes.flex}>
-                          <span className="material-symbols-outlined">
-                            create_new_folder
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div className={classes.flex}>
-                      <div className={classes.flex}>
-                        <span className="material-symbols-outlined">
-                          keyboard_arrow_right
-                        </span>
-                        <span className="material-symbols-outlined">folder</span>{" "}
-                        Nested 2
-                      </div>
-                      <div className={classes.actions}>
-                        <button className={classes.flex}>
-                          <span className="material-symbols-outlined">
-                            delete_forever
-                          </span>
-                        </button>
-                        <button className={classes.flex}>
-                          <span className="material-symbols-outlined">
-                            create_new_folder
-                          </span>{" "}
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <div className={classes.flex}>
-                  <div className={classes.flex}>
-                    <span className="material-symbols-outlined">
-                      keyboard_arrow_right
-                    </span>
-                    <span className="material-symbols-outlined">folder</span> Folder
-                    2
-                  </div>
-                  <div className={classes.actions}>
-                    <button className={classes.flex}>
-                      <span className="material-symbols-outlined">
-                        delete_forever
-                      </span>
-                    </button>
-                    <button className={classes.flex}>
-                      <span className="material-symbols-outlined">
-                        create_new_folder
-                      </span>{" "}
-                    </button>
-                  </div>
-                </div>
-              </li>
+              <Folders
+                folders={getChildren(root.children[0]._id).children}
+                handleDeleteFolder={handleDeleteFolder}
+                handleAddFolder={handleAddFolder}
+                getChildren={getChildren}
+              />
             </ul>
           </li>
         </ul>
@@ -169,7 +88,10 @@ const Home = () => {
           show={deleteModalVisible}
           modalClosed={() => setDeleteModalVisible(false)}
         >
-          <DeleteFolder folderId={folderId} />
+          <DeleteFolder
+            folder={folder}
+            modalClosed={() => setDeleteModalVisible(false)}
+          />
         </Modal>
       ) : null}
     </section>

@@ -26,10 +26,14 @@
   cursor: pointer;
 }
 
-.folders ul {
+.noFolders {
+  padding-left: 50px;
+}
+
+/* ul {
   list-style: none;
 }
 
-.folders ul li {
+ul li {
   margin-top: 15px;
-}
+} */
