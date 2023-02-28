@@ -9,6 +9,7 @@ import classes from "./Home.module.css";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const [refetch, setRefetch] = useState(false);
 
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [parentId, setParentId] = useState("");
@@ -24,7 +25,7 @@ const Home = () => {
       setFoldersByParent(res.data);
       setLoading(false);
     });
-  }, []);
+  }, [refetch]);
 
   if (loading) return <Loading />;
 
@@ -91,6 +92,7 @@ const Home = () => {
           <DeleteFolder
             folder={folder}
             modalClosed={() => setDeleteModalVisible(false)}
+            setRefetch={setRefetch}
           />
         </Modal>
       ) : null}

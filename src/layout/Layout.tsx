@@ -1,4 +1,5 @@
 import React, { Children } from "react";
+import { Toaster } from "react-hot-toast";
 import Navbar from "./navbar/Navbar";
 
 type LProps = {
@@ -10,6 +11,7 @@ const Layout = ({ children }: LProps) => {
     <>
       <Navbar />
       <div>{children}</div>
+      <Toaster />
     </>
   );
 };
