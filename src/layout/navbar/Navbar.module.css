@@ -1,0 +1,29 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background-color: darkturquoise;
+  padding: 0px 50px;
+}
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.logo span {
+  margin-right: 5px;
+}
+.navItems {
+  list-style: none;
+  display: flex;
+  margin-left: auto;
+  color: white;
+  font-weight: 500;
+}
+.navItems li {
+  margin-left: 10px;
+  cursor: pointer;
+}

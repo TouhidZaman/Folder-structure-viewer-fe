@@ -1,5 +1,12 @@
+import Layout from "./layout/Layout";
+import Home from "./pages/home/Home";
+
 function App() {
-  return <div>Welcome to folder structure viewer</div>;
+  return (
+    <Layout>
+      <Home />
+    </Layout>
+  );
 }
 
 export default App;
