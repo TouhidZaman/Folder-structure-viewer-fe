@@ -9,7 +9,7 @@ import classes from "./Home.module.css";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
-  const [refetch, setRefetch] = useState(false);
+  const [refetch, setRefetch] = useState(false); //  will be used to refetch data again
 
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [parentId, setParentId] = useState("");
@@ -81,7 +81,11 @@ const Home = () => {
       </div>
       {addModalVisible ? (
         <Modal show={addModalVisible} modalClosed={() => setAddModalVisible(false)}>
-          <AddFolder parentId={parentId} />
+          <AddFolder
+            parentId={parentId}
+            setRefetch={setRefetch}
+            modalClosed={() => setAddModalVisible(false)}
+          />
         </Modal>
       ) : null}
       {deleteModalVisible ? (
