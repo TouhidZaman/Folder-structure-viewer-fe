@@ -70,7 +70,7 @@ const Home = () => {
             </div>
             <ul>
               <Folders
-                folders={getChildren(root.children[0]._id).children}
+                folders={getChildren(root.children[0]._id)?.children || []}
                 handleDeleteFolder={handleDeleteFolder}
                 handleAddFolder={handleAddFolder}
                 getChildren={getChildren}
